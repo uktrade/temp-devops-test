@@ -1,0 +1,47 @@
+name: "Feature test & deploy"
+
+# @TODO redo all these triggers to be on check completed?
+on:
+  pull_request:
+    branches:
+      - "main" # only branches merging *into* main
+      - "master"
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  # run fast unit tests etc
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - run: env # just a dummy so some checks appear
+
+  # Creates a GitHub "Deployment" record, which GH uses to populate the UI
+  # and used as a trigger for Jenkins build
+  dev-deployment:
+    # run regardless of test result, but allow cancellation
+    if: success() || failure()
+    runs-on: ubuntu-latest
+    environment:
+      name: dev
+      url: https://dev.github.com
+    concurrency: dev
+    steps:
+      - name: Create GH Deployment for Dev environment
+        uses: actions/github-script@v6
+        with:
+          github-token: "${{ secrets.GH_TOKEN }}"
+          script: |
+            github.rest.repos.createDeployment({
+              environment: "dev",
+              auto_merge: false,
+              ref: "${{ github.event.pull_request.head.ref }}",
+              description: "Auto Dev deployment",
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              required_contexts: []
+            })
