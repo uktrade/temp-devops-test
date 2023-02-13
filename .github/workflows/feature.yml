@@ -1,6 +1,5 @@
 name: "Feature"
 
-# @TODO redo all these triggers to be on check completed?
 on:
   pull_request:
     branches:

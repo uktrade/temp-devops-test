@@ -1,6 +1,5 @@
 name: "Main"
 
-# @TODO redo all these triggers to be on check completed?
 on:
   push:
     branches:
