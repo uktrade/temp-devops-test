@@ -45,6 +45,7 @@ jobs:
           script: |
             return github.rest.checks.listForRef({
               ref: "bbe654e4975b437a99877b3f17f3e0563e8d9865",
+              check_name: "unit-test",
               owner: "uktrade",
               repo: "temp-devops-test",
             })
