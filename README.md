@@ -10,7 +10,7 @@ Different levels of tests
 
 Auto deploying and concurrency
 
-Workflow
+Workflow logic
 
 ### PRs and the Dev environment
 
