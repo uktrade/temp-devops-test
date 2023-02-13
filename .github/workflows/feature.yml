@@ -41,10 +41,14 @@ jobs:
             const check = await github.rest.checks.listForRef({
               ref: "3eb7d180a087b48063665c91a7962b157e1b4f81",
               check_name: "full-test",
-              status: "completed"
+              status: "completed",
               owner: "uktrade",
               repo: "temp-devops-test",
             });
+            if (check.data.total_count > 0 && check.data.check_runs[0].conclusion == "success") {
+              exit 0
+            }
+            exit 1
       - name: Get result
         run: echo "${{ steps.check_run.outputs.result }}"
       - name: Create GH Deployment for Dev environment
