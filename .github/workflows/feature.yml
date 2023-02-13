@@ -46,9 +46,9 @@ jobs:
               repo: "temp-devops-test",
             });
             if (check.data.total_count > 0 && check.data.check_runs[0].conclusion == "success") {
-              return 0
+              return "success"
             }
-            return 1
+            core.setFailed("No completed valid check runs found for that ref")
       - name: Get result
         run: echo "${{ steps.check_run.outputs.result }}"
       - name: Create GH Deployment for Dev environment
