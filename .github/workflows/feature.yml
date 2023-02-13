@@ -39,11 +39,11 @@ jobs:
           result-encoding: string
           script: |
             const check = await github.rest.checks.listForRef({
-              ref: "${{ github.sha }}",
+              ref: "3eb7d180a087b48063665c91a7962b157e1b4f81",
               check_name: "full-test",
               status: "completed",
-              owner: "uktrade",
-              repo: "temp-devops-test",
+              owner: "${{ github.repository_owner }}",
+              repo: "${{ github.event.repository.name }}",
             });
             if (check.data.total_count <= 0 || check.data.check_runs[0].conclusion != "success") {
               core.setFailed("No completed valid check runs found for that ref")
