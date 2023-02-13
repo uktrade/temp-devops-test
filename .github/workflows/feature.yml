@@ -41,6 +41,8 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
+      - name: Get result
+        run: echo "${{steps.check_run.outputs.result}}"
       - name: Create GH Deployment for Dev environment
         uses: actions/github-script@v6
         with:
