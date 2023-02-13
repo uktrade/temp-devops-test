@@ -34,7 +34,6 @@ jobs:
         id: check_run
         uses: actions/github-script@v6
         with:
-          result-encoding: string
           script: |
             return github.rest.checks.listForRef({
               ref: context.sha,
