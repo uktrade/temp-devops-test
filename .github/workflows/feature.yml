@@ -16,8 +16,6 @@ jobs:
   unit-test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
       - run: env # just a dummy so some checks appear
 
   # Creates a GitHub "Deployment" record, which GH uses to populate the UI
@@ -36,12 +34,15 @@ jobs:
         id: check_run
         uses: actions/github-script@v6
         with:
+          result-encoding: string
           script: |
-            echo $(github.rest.checks.listForRef({
+            return github.rest.checks.listForRef({
               ref: context.sha,
               owner: context.repo.owner,
               repo: context.repo.repo,
-            }))
+            })
+      - name: Get result
+        run: echo "${{steps.check_run.outputs.result}}"
       - name: Create GH Deployment for Dev environment
         uses: actions/github-script@v6
         with:
