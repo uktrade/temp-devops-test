@@ -24,9 +24,13 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            github.rest.check_runs.get({
-              ref: "${{ github.ref }}",
+            return github.rest.checks.listForRef({
+              ref: context.sha,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
             })
+      - name: Get result
+        run: echo "${{steps.check_run.outputs.result.data.check_runs}}"
       - name: Create GH Deployment for PROD environment
         id: create_deployment
         uses: actions/github-script@v6
