@@ -16,8 +16,6 @@ jobs:
   unit-test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
       - run: env # just a dummy so some checks appear
 
   # Creates a GitHub "Deployment" record, which GH uses to populate the UI

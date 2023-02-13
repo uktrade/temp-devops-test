@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@octokit/rest": "^19.0.7",
+    "github-app-repl": "^1.0.1"
+  }
+}
