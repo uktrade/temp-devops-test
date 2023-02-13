@@ -39,7 +39,6 @@ jobs:
           script: |
             echo github.rest.checks.listForRef({
               ref: context.sha,
-              check_name: "unit-test",
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
