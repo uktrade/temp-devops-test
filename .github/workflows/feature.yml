@@ -39,7 +39,7 @@ jobs:
           result-encoding: string
           script: |
             const check = await github.rest.checks.listForRef({
-              ref: "3eb7d180a087b48063665c91a7962b157e1b4f81",
+              ref: "${{ github.sha }}",
               check_name: "full-test",
               status: "completed",
               owner: "uktrade",
