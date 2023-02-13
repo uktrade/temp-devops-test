@@ -21,6 +21,7 @@ jobs:
   # Creates a GitHub "Deployment" record, which GH uses to populate the UI
   # and used as a trigger for Jenkins build
   dev-deployment:
+    needs: unit-test
     # run regardless of test result, but allow cancellation
     if: success() || failure()
     runs-on: ubuntu-latest
