@@ -26,6 +26,7 @@ jobs:
           script: |
             return github.rest.checks.listForRef({
               ref: context.sha,
+              check_name: "full-test",
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
