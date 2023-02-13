@@ -36,7 +36,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            github.rest.checks.get({
+            github.rest.checks.listForRef({
               ref: context.sha,
               owner: context.repo.owner,
               repo: context.repo.repo,
