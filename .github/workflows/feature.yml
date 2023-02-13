@@ -1,4 +1,4 @@
-name: "Feature test & deploy"
+name: "Feature"
 
 # @TODO redo all these triggers to be on check completed?
 on:
@@ -34,7 +34,6 @@ jobs:
       - name: Create GH Deployment for Dev environment
         uses: actions/github-script@v6
         with:
-          github-token: "${{ secrets.GH_TOKEN }}"
           script: |
             github.rest.repos.createDeployment({
               environment: "dev",

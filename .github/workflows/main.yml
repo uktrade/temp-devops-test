@@ -1,4 +1,4 @@
-name: "Main test & deploy"
+name: "Main"
 
 # @TODO redo all these triggers to be on check completed?
 on:
