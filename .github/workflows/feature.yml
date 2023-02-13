@@ -30,9 +30,9 @@ jobs:
     concurrency: dev
     steps:
       - run: echo "${{ github.sha }}"
-      - run: echo "${{ github.repository }}"
+      - run: echo "${{ github.event.repository.name }}"
       - run: echo "${{ github.repository_owner }}"
-      - name: Check this ref is tested
+      - name: Continue if this ref is tested
         id: check_run
         uses: actions/github-script@v6
         with:
@@ -45,10 +45,10 @@ jobs:
               owner: "uktrade",
               repo: "temp-devops-test",
             });
-            if (check.data.total_count > 0 && check.data.check_runs[0].conclusion == "success") {
-              return "success"
+            if (check.data.total_count <= 0 || check.data.check_runs[0].conclusion != "success") {
+              core.setFailed("No completed valid check runs found for that ref")
             }
-            core.setFailed("No completed valid check runs found for that ref")
+            return "success"
       - name: Get result
         run: echo "${{ steps.check_run.outputs.result }}"
       - name: Create GH Deployment for Dev environment
