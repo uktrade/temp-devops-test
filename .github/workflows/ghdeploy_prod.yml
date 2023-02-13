@@ -13,17 +13,24 @@ jobs:
   # and used as a trigger for Jenkins build
   # We can add a manual approval step if we want
   deploy:
-    if: ${{ github.ref.check-run.conclusion == "success" }}
+    if: ${{ github.event.ref.check-run.conclusion == "success" }}
     runs-on: ubuntu-latest
     environment:
       name: production
       url: https://github.com
     steps:
+      - name: Get Check Runs for related ref
+        id: check_run
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.check_runs.get({
+              ref: "${{ github.ref }}",
+            })
       - name: Create GH Deployment for PROD environment
         id: create_deployment
         uses: actions/github-script@v6
         with:
-          github-token: "${{ secrets.GH_TOKEN }}"
           script: |
             github.rest.repos.createDeployment({
               environment: "production",

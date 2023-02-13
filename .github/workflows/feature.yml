@@ -31,6 +31,14 @@ jobs:
       url: https://dev.github.com
     concurrency: dev
     steps:
+      - name: Get Check Runs for related ref
+        id: check_run
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.check_runs.get({
+              ref: "${{ github.ref }}",
+            })
       - name: Create GH Deployment for Dev environment
         uses: actions/github-script@v6
         with:
