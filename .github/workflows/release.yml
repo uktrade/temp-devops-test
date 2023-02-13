@@ -23,18 +23,20 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            echo context.repo.owner
+            echo context.sha
+            echo github.rest.checks.listForRef({
+              ref: context.sha,
+              check_name: "full-test",
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            })
             return github.rest.checks.listForRef({
               ref: context.sha,
               check_name: "full-test",
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
-      - name: Get result
-        run: |
-          echo "${{ steps.check_run.outputs.result.data.check_runs }}"
-          echo "${{ context.repo.owner }}"
-          echo "${{ context.sha }}"
-          echo "${{ github.ref }}"
       - name: Create GH Deployment for PROD environment
         id: create_deployment
         uses: actions/github-script@v6
