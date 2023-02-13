@@ -45,7 +45,7 @@ jobs:
           result-encoding: string
           script: |
             const check = await github.rest.checks.listForRef({
-              ref: "bbe654e4975b437a99877b3f17f3e0563e9865",
+              ref: ${{ github.ref }},
               check_name: "unit-test",
               owner: "uktrade",
               repo: "temp-devops-test",
