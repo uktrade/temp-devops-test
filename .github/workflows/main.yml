@@ -30,12 +30,11 @@ jobs:
       - name: Create GH Deployment for Staging environment
         uses: actions/github-script@v6
         with:
-          github-token: "${{ secrets.GH_TOKEN }}"
           script: |
             github.rest.repos.createDeployment({
               environment: "staging",
               auto_merge: false,
-              ref: "${{ github.event.pull_request.base.ref }}",
+              ref: "${{ github.ref }}",
               description: "Auto staging deployment",
               owner: context.repo.owner,
               repo: context.repo.repo,
