@@ -13,7 +13,6 @@ jobs:
   # and used as a trigger for Jenkins build
   # We can add a manual approval step if we want
   deploy:
-    if: ${{ github.event.ref.check-run.conclusion == "success" }}
     runs-on: ubuntu-latest
     environment:
       name: production
