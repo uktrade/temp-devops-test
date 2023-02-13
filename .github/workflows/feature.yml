@@ -36,8 +36,10 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            github.rest.repos.commit.get({
+            github.rest.checks.get({
               ref: "${{ github.ref }}",
+              owner: context.repo.owner,
+              repo: context.repo.repo,
             })
       - name: Create GH Deployment for Dev environment
         uses: actions/github-script@v6
