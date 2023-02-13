@@ -37,7 +37,7 @@ jobs:
         with:
           script: |
             github.rest.checks.get({
-              ref: "${{ github.ref }}",
+              ref: context.ref,
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
