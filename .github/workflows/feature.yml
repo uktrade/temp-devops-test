@@ -31,10 +31,14 @@ jobs:
     concurrency: dev
     steps:
       - name: echo inputs
+        id: debug_input
         uses: actions/github-script@v6
         with:
+          result-encoding: string
           script: |
-            echo context.sha
+            return context.sha
+      - name: Get result
+        run: echo "${{ steps.debug_input.outputs.result.data }}"
       - name: Get Check Runs for related ref
         id: check_run
         uses: actions/github-script@v6
