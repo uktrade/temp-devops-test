@@ -30,15 +30,8 @@ jobs:
       url: https://dev.github.com
     concurrency: dev
     steps:
-      # - name: echo inputs
-      #   id: debug_input
-      #   uses: actions/github-script@v6
-      #   with:
-      #     result-encoding: string
-      #     script: |
-      #       return context
-      # - name: Get result
-      #   run: echo "${{ steps.debug_input.outputs.result.data }}"
+      - run: echo "${{ github.sha }}"
+      - run: echo "${{ github.repo }}"
       - name: Get Check Runs for related ref
         id: check_run
         uses: actions/github-script@v6
@@ -46,8 +39,8 @@ jobs:
           result-encoding: string
           script: |
             const check = await github.rest.checks.listForRef({
-              ref: "${{ github.sha }}",
-              check_name: "unit-test",
+              ref: "3eb7d180a087b48063665c91a7962b157e1b4f81",
+              check_name: "full-test",
               owner: "uktrade",
               repo: "temp-devops-test",
             });
