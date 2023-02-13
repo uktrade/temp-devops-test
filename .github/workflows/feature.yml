@@ -30,6 +30,12 @@ jobs:
       url: https://dev.github.com
     concurrency: dev
     steps:
+      - name: echo inputs
+        id: check_run
+        uses: actions/github-script@v6
+        with:
+          script: |
+            echo context.sha
       - name: Get Check Runs for related ref
         id: check_run
         uses: actions/github-script@v6
@@ -41,7 +47,7 @@ jobs:
               repo: context.repo.repo,
             })
       - name: Get result
-        run: echo "${{steps.check_run.outputs.result}}"
+        run: echo "${{ steps.check_run.outputs.result }}"
       - name: Create GH Deployment for Dev environment
         uses: actions/github-script@v6
         with:
