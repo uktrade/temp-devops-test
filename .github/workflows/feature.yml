@@ -23,6 +23,7 @@ jobs:
   # Creates a GitHub "Deployment" record, which GH uses to populate the UI
   # and used as a trigger for Jenkins build
   dev-deployment:
+    needs: unit-test
     # run regardless of test result, but allow cancellation
     if: success() || failure()
     runs-on: ubuntu-latest
@@ -31,6 +32,17 @@ jobs:
       url: https://dev.github.com
     concurrency: dev
     steps:
+      - name: Get Check Runs for related ref
+        id: check_run
+        uses: actions/github-script@v6
+        with:
+          script: |
+            echo github.rest.checks.listForRef({
+              ref: context.sha,
+              check_name: "unit-test",
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            })
       - name: Create GH Deployment for Dev environment
         uses: actions/github-script@v6
         with:
