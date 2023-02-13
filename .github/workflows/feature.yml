@@ -36,7 +36,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            github.rest.check_runs.get({
+            github.rest.commits.get({
               ref: "${{ github.ref }}",
             })
       - name: Create GH Deployment for Dev environment
