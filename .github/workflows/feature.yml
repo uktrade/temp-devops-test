@@ -37,11 +37,11 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            echo github.rest.checks.listForRef({
+            echo $(github.rest.checks.listForRef({
               ref: context.sha,
               owner: context.repo.owner,
               repo: context.repo.repo,
-            })
+            }))
       - name: Create GH Deployment for Dev environment
         uses: actions/github-script@v6
         with:
