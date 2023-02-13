@@ -21,7 +21,6 @@ jobs:
   # Creates a GitHub "Deployment" record, which GH uses to populate the UI
   # and used as a trigger for Jenkins build
   dev-deployment:
-    needs: unit-test
     # run regardless of test result, but allow cancellation
     if: success() || failure()
     runs-on: ubuntu-latest
@@ -31,7 +30,8 @@ jobs:
     concurrency: dev
     steps:
       - run: echo "${{ github.sha }}"
-      - run: echo "${{ github.repo }}"
+      - run: echo "${{ github.repository }}"
+      - run: echo "${{ github.repository_owner }}"
       - name: Get Check Runs for related ref
         id: check_run
         uses: actions/github-script@v6
