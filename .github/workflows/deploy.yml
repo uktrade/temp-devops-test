@@ -22,4 +22,4 @@ jobs:
             })
       - name: Trigger CI build system
         run: |
-          curl -X GET "${CI_BUILD_TRIGGER_URL}&Environment=${{github.event.deployment.environment}}&Git_Commit=${{github.event.deployment.sha}}"
+          curl -X GET "$CI_BUILD_TRIGGER_URL&Environment=${{github.event.deployment.environment}}&Git_Commit=${{github.event.deployment.sha}}"
