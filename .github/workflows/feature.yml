@@ -37,7 +37,7 @@ jobs:
         with:
           script: |
             github.rest.checks.get({
-              ref: context.ref,
+              ref: context.sha,
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
