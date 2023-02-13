@@ -45,16 +45,14 @@ jobs:
               owner: "uktrade",
               repo: "temp-devops-test",
             });
-            if (check.data.total_count < 1) {
-              exit 1
+            if (check.data.total_count > 0 && check.data.check_runs[0].conclusion == "success") {
+              exit 0
             }
-            exit 0
-            //return check.data.check_runs[0].conclusion
+            exit 1
       - name: Get result
         run: echo "${{ steps.check_run.outputs.result }}"
       - name: Create GH Deployment for Dev environment
         uses: actions/github-script@v6
-        if: ${{ steps.check_run.outputs.result == "success" }}
         with:
           script: |
             github.rest.repos.createDeployment({
