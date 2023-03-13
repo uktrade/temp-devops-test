@@ -1,0 +1,25 @@
+name: Deploy
+
+on: deployment
+
+jobs:
+  trigger_deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update GH Deployment status to "in progress"
+        id: create_in_progress_status
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.repos.createDeploymentStatus({
+              deployment_id: "${{ github.event.deployment.id }}",
+              environment: "${{ github.event.deployment.environment }}",
+              log_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+              description: "starting CI/CD run",
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: "in_progress"
+            })
+      - name: Trigger CI build system
+        run: |
+          curl -X POST "${{ secrets.CI_BUILD_TRIGGER_URL }}&ENVIRONMENT=${{ github.event.deployment.environment }}&GIT_COMMIT=${{ github.event.deployment.sha }}"
