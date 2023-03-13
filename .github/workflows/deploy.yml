@@ -20,6 +20,6 @@ jobs:
               repo: context.repo.repo,
               state: "in_progress"
             })
-      # - name: Trigger CI build system
-      #   run: |
-      #     curl -X GET "${{ secrets.CI_BUILD_TRIGGER_URL }}&Environment=${{ github.event.deployment.environment }}&Git_Commit=${{ github.event.deployment.sha }}"
+      - name: Trigger CI build system
+        run: |
+          curl -X GET "${{ secrets.CI_BUILD_TRIGGER_URL }}&Environment=${{ github.event.deployment.environment }}&Git_Commit=${{ github.event.deployment.sha }}"
